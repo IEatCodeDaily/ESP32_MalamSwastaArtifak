@@ -8,11 +8,17 @@ const char *password = "AkuBukanKrishna";
 
 const char *expectedPassword = "anagatateknikfisikaduaribusembilanbelas";
 
+const int led_red = 12;
+const int led_green = 14;
+const int led_blue = 13;
+
 AsyncWebServer server(80);
 
 void setup() {
     Serial.begin(115200);
-
+    pinMode(led_red, OUTPUT);
+    pinMode(led_green, OUTPUT);
+    pinMode(led_blue, OUTPUT);
 
     if (!SPIFFS.begin(true)) {
         Serial.println("An error occurred while mounting SPIFFS");
