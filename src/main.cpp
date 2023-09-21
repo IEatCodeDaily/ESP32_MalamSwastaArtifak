@@ -8,18 +8,32 @@ const char *password = "AkuBukanKrishna";
 
 const char *expectedPassword = "anagatateknikfisikaduaribusembilanbelas";
 
-const int led_red = 12;
-const int led_green = 14;
-const int led_blue = 13;
+
+const int red_pin = 12;
+const int green_pin = 14;
+const int blue_pin = 13;
+
+const int freq = 5000;
+const int resolution = 8;
+const int red_channel = 0;
+const int green_channel = 1;
+const int blue_channel = 2;
+
 
 AsyncWebServer server(80);
 
 void setup() {
     Serial.begin(115200);
-    pinMode(led_red, OUTPUT);
-    pinMode(led_green, OUTPUT);
-    pinMode(led_blue, OUTPUT);
 
+    // Configure LED PWM functionalities
+    ledcSetup(red_channel, freq, resolution);
+    ledcSetup(green_channel, freq, resolution);
+    ledcSetup(blue_channel, freq, resolution);
+
+    // Attach the channel to the GPIO
+    ledcAttachPin(red_pin, red_channel);
+    ledcAttachPin(green_pin, green_channel);
+    ledcAttachPin(blue_pin, blue_channel);
     if (!SPIFFS.begin(true)) {
         Serial.println("An error occurred while mounting SPIFFS");
         return;
