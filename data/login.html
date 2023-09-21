@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Page</title>
+    <title>Sudharsana Chakra</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* Your existing styles here */
+
+        /* Media query for screens with a maximum width of 768px (typical for mobile devices) */
+        @media (max-width: 768px) {
+            /* Increase font size for better readability on mobile */
+            body {
+                font-size: 18px;
+            }
+        
+            /* Adjust spacing or layout as needed for a mobile-friendly experience */
+            /* For example, remove margins or padding from elements */
+            p {
+                margin: 0;
+                padding: 5px;
+            }
+        }
+    </style>
 </head>
 <body style="background-color:black; display:flex; justify-content:center; align-items:center; height:100vh;">
     <form action="/check" method="POST">
-        <input type="password" name="password" placeholder="Enter password">
-        <button type="submit">Submit</button>
+        <input type="text" name="password" placeholder="...">
+        <button type="submit">Buka</button>
     </form>
 </body>
 </html>

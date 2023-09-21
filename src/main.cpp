@@ -6,7 +6,7 @@
 const char *ssid = "Sudarshana-Chakra";
 const char *password = "AkuBukanKrishna";
 
-const char *expectedPassword = "demi tuhan";
+const char *expectedPassword = "anagatateknikfisikaduaribusembilanbelas";
 
 AsyncWebServer server(80);
 
@@ -43,10 +43,10 @@ void setup() {
             if (userPassword == expectedPassword) {
                 request->send(SPIFFS, "/mantra.html", "text/html");
             } else {
-                request->send(403, "text/plain", "Access Denied");
+                request->send(SPIFFS, "/login.html", "text/html");
             }
         } else {
-            request->send(400, "text/plain", "Bad Request");
+            request->send(SPIFFS, "/login.html", "text/html");
         }
     });
     server.begin();
