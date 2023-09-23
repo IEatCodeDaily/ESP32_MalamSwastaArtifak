@@ -5,7 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
             /* Your existing styles here */
-
+            .qr-code {
+                width: 200px; /* Adjust the width as needed */
+                height: auto; /* Maintain aspect ratio */
+            }
             /* Media query for screens with a maximum width of 768px (typical for mobile devices) */
             @media (max-width: 768px) {
                 /* Increase font size for better readability on mobile */
@@ -23,10 +26,18 @@
                     line-height: 2; /* Vertical centering (adjust as needed) */
                     margin: 0;
                     padding: 5px;
-                    color: rgb(0, 140, 255);
-                    text-shadow:0 0 10px rgba(255, 255, 255, 0.596), /* Glowing effect (blue glow) */
-                                0 0 20px rgba(255, 255, 255, 0.37),
+                    color: rgb(255, 187, 0);
+                    text-shadow:0 0 10px rgba(255, 255, 255, 0.795), /* Glowing effect (blue glow) */
+                                0 0 20px rgba(255, 255, 255, 0.555),
                                 0 0 30px rgba(255, 255, 255, 0.164);
+                }
+                .qr-code {
+                    display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    text-align: center;
+                    width: 50%; /* Take up the full width of the container on small screens */
+                    height: auto; /* Maintain aspect ratio */
                 }
             }
         </style>
@@ -37,6 +48,9 @@
     Puh sepuh ajarin dong<br>
     Masih LTF1 aku puh sepuh<br>
     Tinky winky dipsy lala puh sepuh<br>
-    Ajarin dong puh sepuh!</p>
+    Ajarin dong puh sepuh!<br><br>
+    <img class="qr-code" src="qr.png"></p>
+
+    <!-- Insert the QR code image -->
 </body>
 </html>

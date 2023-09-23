@@ -3,8 +3,8 @@
 #include <ESPAsyncWebServer.h>
 #include <SPIFFS.h>
 
-const char *ssid = "Sudarshana-Chakra";
-const char *password = "AkuBukanKrishna";
+const char *ssid = "MahaPadma";
+const char *password = "nawasenaduaribuduapuluhdua";
 
 const char *expectedPassword = "anagatateknikfisikaduaribusembilanbelas";
 
@@ -34,6 +34,7 @@ void setup() {
     ledcAttachPin(red_pin, red_channel);
     ledcAttachPin(green_pin, green_channel);
     ledcAttachPin(blue_pin, blue_channel);
+
     if (!SPIFFS.begin(true)) {
         Serial.println("An error occurred while mounting SPIFFS");
         return;
@@ -46,6 +47,9 @@ void setup() {
     WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));
     WiFi.softAP(ssid, password);
 
+    ledcWrite(0, 0);
+    ledcWrite(1, 0);
+    ledcWrite(2, 60);
     Serial.println("Access Point mode activated");
     Serial.print("SSID: ");
     Serial.println(ssid);
@@ -54,6 +58,9 @@ void setup() {
 
     server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
         request->send(SPIFFS, "/login.html", "text/html");
+        ledcWrite(0, 255);
+        ledcWrite(1, 255);
+        ledcWrite(2, 200);
         //Serial.println("GET REQUEST ON /");
     });
 
@@ -62,13 +69,51 @@ void setup() {
             String userPassword = request->getParam("password", true)->value();
             if (userPassword == expectedPassword) {
                 request->send(SPIFFS, "/mantra.html", "text/html");
+                ledcWrite(0, 255);
+                ledcWrite(1, 30);
+                ledcWrite(2, 0);
             } else {
                 request->send(SPIFFS, "/login.html", "text/html");
+                ledcWrite(0, 255);
+                ledcWrite(1, 0);
+                ledcWrite(2, 0);
             }
         } else {
             request->send(SPIFFS, "/login.html", "text/html");
         }
     });
+
+    server.on("/rgb", HTTP_GET, [](AsyncWebServerRequest *request) {
+    // Check if the URL has the "color" query parameter
+        if (request->hasParam("color")) {
+            // Get the value of the "color" query parameter
+            String colorValue = request->getParam("color")->value();
+            
+            // Split the colorValue into individual RGB components
+            int red, green, blue;
+            if (sscanf(colorValue.c_str(), "%d,%d,%d", &red, &green, &blue) == 3) {
+                // Here, you can set the RGB LED duty cycle based on the RGB values
+                // (You need to implement this part according to your hardware setup)
+
+                // Send a response indicating that the RGB values have been set
+                request->send(200, "text/plain", "RGB values set to: " + colorValue);
+                ledcWrite(0, red);
+                ledcWrite(1, green);
+                ledcWrite(2, blue);
+            } else {
+                // If parsing fails, send an error response
+                request->send(400, "text/plain", "Invalid 'color' format");
+            }
+        } else {
+            // If the "color" query parameter is missing, send an error response
+            request->send(400, "text/plain", "Missing 'color' query parameter");
+        }
+    });
+
+    server.on("/qr.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/qr.png", "image/png");
+        });
+    
     server.begin();
     
 }
